@@ -1,0 +1,5 @@
+1,Hóa đơn nhập hàng thực phẩm,Công ty TNHH Sông Đà,Bột mỳ,TP,200,30
+2,Hóa đơn nhập hàng điện máy,Công ty SONY,Máy Giặt,GD,2,4500
+3,Hóa đơn nhập sữa,Công ti ViNaMilk,Sữa Tươi,TP,200,10
+4,Hóa đơn nhập Tủ lạnh,Công Ty Sony,Tủ lạnh sony,GD,5,5500
+5,Hóa đơn Nhập Ngũ Côc,Công ty NutiFood,Ngũ Cốc BeOne,TP,100,40

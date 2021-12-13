@@ -1,0 +1,91 @@
+﻿@using Do_An_HDT_1988308.Service;
+@using Do_An_HDT_1988308.Entities
+@{
+    Layout = null;
+    if (Session["USER"] == null)
+    {
+        Response.Redirect("~/UI/MH_DANGNHAP.cshtml");
+    }
+
+    string keyword = string.Empty;
+    var xl = new XL_HOADON_BAN();
+
+    if(IsPost)
+    {
+        keyword = Request["keyword"];
+
+    }
+    var dsHoaDon = xl.TimKiemHoaDonBan(keyword);
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HÓA ĐƠN BÁN</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 80%;
+            text-align: center;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <div style="background-color: azure;text-align:center">
+        <h1 style="text-align:center; color:palevioletred;">DANH SÁCH HÓA ĐƠN BÁN HÀNG</h1><br />
+        <form action="~/UI/MH_DS_HOADON_BAN.cshtml" method="post">
+            <label>Nhập từ khóa tìm kiếm: </label><br /><br />
+            <input type="text" name="keyword" value="" /><br /><br />
+            <input type="submit" value="Tìm Kiếm" /><br /><br /><br />
+        </form>
+        <a href="~/UI/MH_THEM_HOADON_BAN.cshtml">THÊM HÓA ĐƠN BÁN</a><br /><br />
+    </div>
+    <hr />
+    <div>
+        <table>
+            <tr>
+                <th>Mã Hóa Đơn</th>
+                <th>Tên Hóa Đơn</th>
+                <th>Tên Khách Hàng</th>
+                <th>Tên Mặt Hàng</th>
+                <th>Mã Loại Hàng</th>
+                <th>Số Lượng</th>
+                <th>Đơn Giá</th>
+                <th></th>
+                @*<th></th>*@
+            </tr>
+            @foreach (var hdb in dsHoaDon)
+            {
+                <tr>
+                    <td>@hdb.MaHD</td>
+                    <td>@hdb.TenHD</td>
+                    <td>@hdb.TenKhachHang</td>
+                    <td>@hdb.TenMH</td>
+                    <td>@hdb.MaLH</td>
+                    <td>@hdb.SoLuong</td>
+                    <td>@hdb.DonGia</td>
+                    <td><a href="~/UI/MH_SUA_HOADON_BAN.cshtml?id=@hdb.MaHD">Sửa</a></td>
+                    <td><a href="~/UI/MH_XOA_HOADON_BAN.cshtml?id=@hdb.MaHD">xóa</a></td>
+
+                </tr>
+            }
+        </table>
+        <br /><br />
+        <a href="~/UI/MH_QLCH.cshtml">Trở về Trang chủ</a><br /><br /><br />
+    </div>
+</body>
+</html>

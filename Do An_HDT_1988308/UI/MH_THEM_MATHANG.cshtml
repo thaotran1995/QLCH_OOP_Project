@@ -1,0 +1,52 @@
+﻿@using Do_An_HDT_1988308.Service;
+@using Do_An_HDT_1988308.Entities;
+@using System.Globalization;
+@{
+    Layout = null;
+    string chuoi = string.Empty;
+
+
+    if(IsPost)
+    {
+        var TenMH = Request["tenMH"];
+        var NamSX = DateTime.ParseExact(Request["namSX"], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+        var TenCT = Request["tenCT"];
+        var HanSD = DateTime.ParseExact(Request["hanSD"], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+        var MaLH = Request["maLH"];
+        var xl = new XL_MATHANG();
+        xl.ThemMatHang(TenMH, NamSX, TenCT, HanSD, MaLH);
+        Response.Redirect("~/UI/MH_DS_MATHANG.cshtml");
+
+    }
+
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title> THÊM MẶT HÀNG</title>
+ 
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_THEM_MATHANG.cshtml" method="post">
+            <label>Nhập Tên Mặt Hàng: </label><br />
+            <input type="text" name="tenMH" value="" /><br />
+            <label>Nhập Ngày SX : </label><br />
+            <input type="text" name="namSX" value="" /><br />
+            <label>Nhập Tên Công Ty: </label><br />
+            <input type="text" name="tenCT" value="" /><br />
+            <label>Nhập Hạn Sử Dụng: </label><br />
+            <input type="text" name="hanSD" value="" /><br />
+            <label>Nhập Mã Loại Hàng: </label><br />
+            <input type="text" name="maLH" value="" /><br /><br />
+            
+            <input type="submit" value="Thêm Mặt Hàng" /><br /><br />
+        </form>
+       
+    </div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+1,GD,Đồ Gia Dụng
+2,MP,Mỹ Phẩm
+3,TP,Thực Phẩm
+4,DGD,Điện Gia Dụng

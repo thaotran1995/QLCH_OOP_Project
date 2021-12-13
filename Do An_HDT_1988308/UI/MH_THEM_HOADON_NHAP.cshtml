@@ -1,0 +1,55 @@
+﻿@using Do_An_HDT_1988308.Service;
+@using Do_An_HDT_1988308.Entities;
+@using System.Globalization;
+@{
+    Layout = null;
+    string chuoi = string.Empty;
+
+
+    if(IsPost)
+    {
+        var tenHD = Request["tenHD"];
+        var tenNCC = Request["tenNCC"];
+        var tenMH = Request["tenMH"];
+        var maLH = Request["maLH"];
+        var sl = int.Parse(Request["sl"]);
+        var dg = int.Parse(Request["dg"]);
+        var xl = new XL_HOADON_NHAP();
+        xl.ThemHoaDonNhap(tenHD,tenNCC,tenMH,maLH,sl,dg);
+        Response.Redirect("~/UI/MH_DS_HOADON_NHAP.cshtml");
+
+    }
+
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title> THÊM HÓA ĐƠN NHẬP</title>
+ 
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_THEM_HOADON_NHAP.cshtml" method="post">
+            <label>Nhập Tên Hóa Đơn: </label><br />
+            <input type="text" name="tenHD" value="" /><br />
+            <label>Nhập Tên Nhà Cung Cấp : </label><br />
+            <input type="text" name="tenNCC" value="" /><br />
+            <label>Nhập Tên Mặt Hàng: </label><br />
+            <input type="text" name="tenMH" value="" /><br />
+            <label>Nhập Mã Loại Hàng: </label><br />
+            <input type="text" name="maLH" value="" /><br />
+            <label>Nhập Số Lượng: </label><br />
+            <input type="text" name="sl" value="" /><br />
+            <label>Nhập Đơn Giá: </label><br />
+            <input type="text" name="dg" value="" /><br />
+
+            <input type="submit" value="Thêm" /><br /><br />
+        </form>
+       
+    </div>
+</body>
+</html>

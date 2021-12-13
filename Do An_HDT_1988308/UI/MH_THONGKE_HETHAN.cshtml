@@ -1,0 +1,104 @@
+﻿@using Do_An_HDT_1988308.Service;
+@using Do_An_HDT_1988308.Entities;
+@using System;
+@{
+    Layout = null;
+
+    // Kiem tra da dang nhap chua, dang nhap roi moi load man hinh DS SACH
+    if (Session["USER"] == null)
+    {
+
+        Response.Redirect("~/UI/MH_DANGNHAP.cshtml");
+    }
+    string chuoi = string.Empty;
+    var xl = new XL_THONGKE();
+    var dsMatHang = new List<MAT_HANG>();
+    var s1 = DateTime.Now.ToString("dd/MM/yyyy");
+    dsMatHang = xl.KiemTraHetHan(s1);
+    
+    if (IsPost)
+    {
+        var s2 = Request["thoigian"];
+        dsMatHang = xl.KiemTraHetHan(s2);
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DS HẾT HẠN</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            text-align: center;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        h3 {
+            color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <div style="background-color: azure;text-align:center">
+        <h1 style="text-align:center; color:palevioletred;">THỐNG KÊ HÀNG HẾT HẠN</h1><br />
+        <form action="~/UI/MH_THONGKE_HETHAN.cshtml" method="post">
+            <label>Nhập Thời gian (dd/MM/yyyy):</label><br /><br />
+            <input type="text" name="thoigian" value="" required/><br /><br />
+            <input type="submit" value="Thống kê hết hạn" />
+        </form>
+
+    </div>
+    <hr />
+    <div>
+        @if (dsMatHang.Count == 0)
+        {
+            @Html.Raw("Không có mặt hàng nào hết hạn")
+        }
+        else
+        {
+            <h3>Số Lượng Hàng  hết hạn: @dsMatHang.Count</h3>
+            <table>
+                <tr>
+                    <th>Mã Mặt Hàng</th>
+                    <th>Tên Mặt Hàng</th>
+                    <th>Năm Sản Xuất</th>
+                    <th>Tên Công Ty</th>
+                    <th>Hạn Sử Sụng</th>
+                    <th>Mã Loại Hàng</th>
+
+                </tr>
+                @foreach (var mh in dsMatHang)
+                {
+                    <tr>
+                        <td>@mh.MaMH</td>
+                        <td>@mh.TenMH</td>
+                        <td>@mh.NamSX.ToString("dd/MM/yyyy")</td>
+                        <td>@mh.TenCongTy</td>
+                        <td>@mh.HanSD.ToString("dd/MM/yyyy")</td>
+                        <td>@mh.MaLoaiHang</td>
+
+
+                    </tr>
+                }
+            </table>
+            <br /><br />
+            <a href="~/UI/MH_QLCH.cshtml">Trở Về Trang chủ</a> <br />
+        }
+    </div>
+</body>
+</html>
+

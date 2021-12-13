@@ -1,0 +1,45 @@
+﻿@using Do_An_HDT_1988308.Service;
+@using Do_An_HDT_1988308.Entities;
+@using System.Globalization;
+@{
+    Layout = null;
+    string chuoi = string.Empty;
+    var id = int.Parse(Request["id"]);
+    var xl = new XL_LOAIHANG();
+    if (IsPost)
+    {
+
+
+        xl.XoaLoaiHang(id);
+        Response.Redirect("~/UI/MH_DS_LOAIHANG.cshtml");
+
+    }
+    else
+    {
+        chuoi = $"Bạn có muốn xóa loại hàng với ID: {id} không???";
+    }
+
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title> XÓA LOẠI HÀNG</title>
+ 
+</head>
+<body>
+    <h2>Xóa Loại Hàng</h2>
+    @chuoi
+    <div>
+
+        <form action="~/UI/MH_XOA_LOAIHANG.cshtml?id=@id" method="post">
+            
+            <input type="submit" value="Xóa" /><br /><br />
+        </form>
+       
+    </div>
+</body>
+</html>

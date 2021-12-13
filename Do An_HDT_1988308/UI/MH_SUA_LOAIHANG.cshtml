@@ -1,0 +1,53 @@
+﻿@using Do_An_HDT_1988308.Service;
+@using Do_An_HDT_1988308.Entities;
+@using System.Globalization;
+@{
+    Layout = null;
+    string chuoi = string.Empty;
+    var id = int.Parse(Request["id"]);
+    var xl = new XL_LOAIHANG();
+    LOAI_HANG lh = null;
+
+    if (IsPost)
+    {
+        var maLH = Request["maLH"];
+        var tenLH = Request["tenLH"];
+        lh = new LOAI_HANG(id,maLH, tenLH);
+        xl.SuaLoaiHang(lh);
+        Response.Redirect("~/UI/MH_DS_LOAIHANG.cshtml");
+
+    }
+    else
+    {
+        lh = xl.DocLoaiHang(id);
+        if(lh==null)
+        {
+            chuoi = "Loại Hàng không tồn tại!!";
+        }
+    }
+
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title> SỬA LOẠI HÀNG</title>
+ 
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_SUA_LOAIHANG.cshtml?id=@id" method="post">
+            <label>Nhập Mã Loại Hàng: </label><br />
+            <input type="text" name="maLH" value="@if (lh != null) { @lh.MaLoaiHang}" /><br />
+            <label>Nhập Tên Loại Hàng : </label><br />
+            <input type="text" name="tenLH" value="@if (lh != null) { @lh.TenLoaiHang}" /><br /><br />
+            
+            <input type="submit" value="Sửa" /><br /><br />
+        </form>
+       
+    </div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+﻿@using Do_An_HDT_1988308.Service;
+@using Do_An_HDT_1988308.Entities
+@{
+
+    Layout = null;
+    if (Session["USER"] == null)
+    {
+        Response.Redirect("~/UI/MH_DANGNHAP.cshtml");
+    }
+    string keyword = string.Empty;
+    var xl = new XL_MATHANG();
+
+    if(IsPost)
+    {
+        keyword = Request["keyword"];
+
+    }
+    var dsMatHang = xl.TimMatHang(keyword);
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>MẶT HÀNG</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 80%;
+            text-align: center;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <div style="background-color: azure;text-align:center">
+        <h1 style="text-align:center; color:palevioletred;">DANH SÁCH MẶT HÀNG</h1><br />
+        <form action="~/UI/MH_DS_MATHANG.cshtml" method="post">
+            <label>Nhập từ khóa tìm kiếm: </label><br /><br />
+            <input type="text" name="keyword" value="" /><br /><br />
+            <input type="submit" value="Tìm Kiếm" /><br /><br /><br />
+        </form>
+        <a href="~/UI/MH_THEM_MATHANG.cshtml">THÊM SẢN PHẨM MỚI</a><br /><br />
+    </div>
+    <hr />
+    <div>
+        <table>
+            <tr>
+                <th>Mã Mặt Hàng</th>
+                <th>Tên Mặt Hàng</th>
+                <th>Năm Sản Xuất</th>
+                <th>Tên Công Ty</th>
+                <th>Hạn Sử Sụng</th>
+                <th>Mã Loại Hàng</th>
+                <th></th>
+                <th></th>
+            </tr>
+            @foreach (var mh in dsMatHang)
+            {
+                <tr>
+                    <td>@mh.MaMH</td>
+                    <td>@mh.TenMH</td>
+                    <td>@mh.NamSX.ToString("dd/MM/yyyy")</td>
+                    <td>@mh.TenCongTy</td>
+                    <td>@mh.HanSD.ToString("dd/MM/yyyy")</td>
+                    <td>@mh.MaLoaiHang</td>
+                    <td><a href="~/UI/MH_SUA_MATHANG.cshtml?id=@mh.MaMH">Sửa</a></td>
+                    <td><a href="~/UI/MH_XOA_MATHANG.cshtml?id=@mh.MaMH">Xóa</a></td>
+
+                </tr>
+            }
+        </table>
+        <br /><br />
+        <a href="~/UI/MH_QLCH.cshtml">Trở về Trang chủ</a><br /><br /><br />
+    </div>
+</body>
+</html>

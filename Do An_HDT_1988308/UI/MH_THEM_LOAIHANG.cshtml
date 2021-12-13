@@ -1,0 +1,43 @@
+﻿@using Do_An_HDT_1988308.Service;
+@using Do_An_HDT_1988308.Entities;
+@using System.Globalization;
+@{
+    Layout = null;
+    string chuoi = string.Empty;
+
+
+    if(IsPost)
+    {
+        var MaLH = Request["maLH"];
+        var TenLH = Request["tenLH"];
+        var xl = new XL_LOAIHANG();
+        xl.ThemLoaiHang(MaLH,TenLH);
+        Response.Redirect("~/UI/MH_DS_LOAIHANG.cshtml");
+
+    }
+
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title> THÊM LOẠI HÀNG</title>
+ 
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_THEM_LOAIHANG.cshtml" method="post">
+            <label>Nhập Mã Loại Hàng: </label><br />
+            <input type="text" name="maLH" value="" /><br />
+            <label>Nhập Tên Loại Hàng : </label><br />
+            <input type="text" name="tenLH" value="" /><br /><br />
+            
+            <input type="submit" value="Thêm" /><br /><br />
+        </form>
+       
+    </div>
+</body>
+</html>

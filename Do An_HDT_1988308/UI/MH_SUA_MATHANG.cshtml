@@ -1,0 +1,63 @@
+﻿@using Do_An_HDT_1988308.Service;
+@using Do_An_HDT_1988308.Entities;
+@using System.Globalization;
+@{
+    Layout = null;
+    string chuoi = string.Empty;
+    var maMH = int.Parse(Request["id"]);
+    var xl = new XL_MATHANG();
+    MAT_HANG mh = null;
+
+    if(IsPost)
+    {
+        var TenMH = Request["tenMH"];
+        var NamSX = DateTime.ParseExact(Request["namSX"], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+        var TenCT = Request["tenCT"];
+        var HanSD = DateTime.ParseExact(Request["hanSD"], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+        var MaLH = Request["maLH"];
+
+        mh = new MAT_HANG(maMH, TenMH, NamSX, TenCT, HanSD, MaLH);
+        xl.SuaMatHang(mh);
+        Response.Redirect("~/UI/MH_DS_MATHANG.cshtml");
+
+    }
+    else
+    {
+        mh = xl.DocMatHang(maMH);
+        if(mh==null)
+        {
+            chuoi = "Sản Phẩm này không tồn taị";
+        }
+    }
+
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title> SỬA MH</title>
+ 
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_SUA_MATHANG.cshtml?id=@maMH" method="post">
+            <label>Nhập Tên Mặt Hàng: </label><br />
+            <input type="text" name="tenMH" value="@if (mh != null) { @mh.TenMH}" /><br />
+            <label>Nhập Ngày SX : </label><br />
+            <input type="text" name="namSX" value="@if (mh != null) { @mh.NamSX.ToString("dd/MM/yyyy")}" /><br />
+            <label>Nhập Tên Công Ty: </label><br />
+            <input type="text" name="tenCT" value="@if (mh != null) { @mh.TenCongTy}" /><br />
+            <label>Nhập Hạn Sử Dụng: </label><br />
+            <input type="text" name="hanSD" value="@if (mh != null) { @mh.HanSD.ToString("dd/MM/yyyy")}" /><br />
+            <label>Nhập Mã Loại Hàng: </label><br />
+            <input type="text" name="maLH" value="@if (mh != null) { @mh.MaLoaiHang}" /><br /><br />
+            
+            <input type="submit" value="Sửa" /><br /><br />
+        </form>
+       
+    </div>
+</body>
+</html>

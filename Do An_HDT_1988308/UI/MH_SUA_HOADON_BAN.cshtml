@@ -1,0 +1,65 @@
+﻿@using Do_An_HDT_1988308.Service;
+@using Do_An_HDT_1988308.Entities;
+@using System.Globalization;
+@{
+    Layout = null;
+    string chuoi = string.Empty;
+    var maHD = int.Parse(Request["id"]);
+    var xl = new XL_HOADON_BAN();
+    HOADON_BAN hdb = null;
+
+    if (IsPost)
+    {
+        var tenHD = Request["tenHD"];
+        var tenKH = Request["tenKH"];
+        var tenMH = Request["tenMH"];
+        var maLH = Request["maLH"];
+        var sl = int.Parse(Request["sl"]);
+        var dg = int.Parse(Request["dg"]);
+        hdb = new HOADON_BAN(maHD, tenHD, tenKH, tenMH, maLH, sl, dg);
+        xl.SuaHoaDonBan(hdb);
+        Response.Redirect("~/UI/MH_DS_HOADON_BAN.cshtml");
+
+    }
+    else
+    {
+        hdb = xl.DocHoaDonBan(maHD);
+        if(hdb == null)
+        {
+            chuoi = "Hóa đơn bán này không tồn tại!!";
+        }
+    }
+
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title> SỬA HD BÁN</title>
+ 
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_SUA_HOADON_BAN.cshtml?id=@maHD" method="post">
+            <label>Nhập Tên Hóa Đơn: </label><br />
+            <input type="text" name="tenHD" value="@if(hdb != null) {@hdb.TenHD}" /><br /> 
+            <label>Nhập Tên Khách Hàng</label><br />
+            <input type="text" name="tenKH" value="@if (hdb != null) {@hdb.TenKhachHang}" /><br /> 
+            <label>Nhập Tên Mặt Hàng: </label><br />
+            <input type="text" name="tenMH" value="@if(hdb != null) {@hdb.TenMH}" /><br />
+            <label>Nhập Mã Loại Hàng: </label><br />
+            <input type="text" name="maLH" value="@if(hdb != null) {@hdb.MaLH}" /><br />
+            <label>Nhập Số Lượng: </label><br />
+            <input type="text" name="sl" value="@if(hdb != null) {@hdb.SoLuong}" /><br />
+            <label>Nhập Đơn Giá: </label><br />
+            <input type="text" name="dg" value="@if(hdb != null) {@hdb.DonGia}" /><br /><br />
+
+            <input type="submit" value="Sửa" /><br /><br />
+        </form>
+       
+    </div>
+</body>
+</html>

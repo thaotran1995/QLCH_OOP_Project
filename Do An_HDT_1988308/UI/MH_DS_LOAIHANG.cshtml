@@ -1,0 +1,84 @@
+﻿@using Do_An_HDT_1988308.Service;
+@using Do_An_HDT_1988308.Entities
+@{
+    Layout = null;
+
+    if (Session["USER"] == null)
+    {
+        Response.Redirect("~/UI/MH_DANGNHAP.cshtml");
+    }
+
+    string keyword = string.Empty;
+    var xl = new XL_LOAIHANG();
+
+    if(IsPost)
+    {
+        keyword = Request["keyword"];
+
+    }
+    var dsLoaiHang = xl.TimKiemLoaiHang(keyword);
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LOẠI HÀNG</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 50%;
+            text-align: center;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <div style="background-color: azure;text-align:center">
+        <h1 style="text-align:center; color:palevioletred;">DANH SÁCH LOẠI HÀNG</h1><br />
+        <form action="~/UI/MH_DS_LOAIHANG.cshtml" method="post">
+            <label>Nhập từ khóa tìm kiếm: </label><br /><br />
+            <input type="text" name="keyword" value="" /><br /><br />
+            <input type="submit" value="Tìm Kiếm" /><br /><br /><br />
+        </form>
+        <a href="~/UI/MH_THEM_LOAIHANG.cshtml">THÊM LOẠI HÀNG MỚI</a><br /><br /><br />
+    </div>
+    <hr />
+    <div>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Mã Loại Hàng</th>
+                <th>Tên Loại Hàng</th>
+                <th></th>
+                <th></th>
+            </tr>
+            @foreach (var lh in dsLoaiHang)
+            {
+                <tr>
+                    <td>@lh.ID</td>
+                    <td>@lh.MaLoaiHang</td>
+                    <td>@lh.TenLoaiHang</td>
+                    <td><a href="~/UI/MH_SUA_LOAIHANG.cshtml?id=@lh.ID">Sửa</a></td>
+                    <td><a href="~/UI/MH_XOA_LOAIHANG.cshtml?id=@lh.ID">Xóa</a></td>
+
+                </tr>
+            }
+        </table>
+        <br /><br />
+        <a href="~/UI/MH_QLCH.cshtml">Trở về Trang chủ</a><br /><br /><br />
+    </div>
+</body>
+</html>

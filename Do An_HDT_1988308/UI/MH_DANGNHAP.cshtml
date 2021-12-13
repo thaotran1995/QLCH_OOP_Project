@@ -1,0 +1,52 @@
+﻿@using Do_An_HDT_1988308.Service;
+@using Do_An_HDT_1988308.Entities;
+@{
+    Layout = null;
+    string totalMessage = string.Empty;
+    var xl = new XL_USER();
+    if (IsPost)
+    {
+        var userName = Request["username"];
+        var passWord = Request["password"];
+        var isCorrect = xl.KiemTraLogin(userName, passWord);
+        var user = xl.TimKiem(userName);
+
+        if (isCorrect == false)
+        {
+            totalMessage = "Dang nhap that bai!! Vui lòng kiểm tra lại thông tin hoặc đăng ký nếu chưa có tài khoản";
+        }
+        else
+        {
+            totalMessage = "Dang nhap thanh cong  voi user" + user.ID;
+            Session["USER"] = user;
+            Response.Redirect("~/UI/MH_QLCH.cshtml");
+        }
+
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ĐĂNG NHẬP</title>
+</head>
+<body>
+    <div style="background-color: azure;text-align:center">
+        <h1 style="text-align:center; color:palevioletred;">MÀN HÌNH ĐĂNG NHẬP</h1><br />
+        <form action="~/UI/MH_DANGNHAP.cshtml" method="post">
+            <label>Username: </label><br>
+            <input type="text" name="username" value=""><br><br />
+
+            <label>Password:</label><br>
+            <input type="password" name="password" value=""><br><br />
+
+            <input type="submit" value="Login"><br /><br /><br />
+            <a href="~/UI/MH_DANGKY.cshtml">ĐĂNG KÝ tài khoản mới ở đây!!</a>
+        </form>
+        @totalMessage;
+
+    </div>
+</body>
+</html>
